@@ -34,5 +34,9 @@ nosetests.xml
 .project
 .pydevproject
 
+# Python stuff
+*.pyc
+*.pyo
+
 # Configuration files
 *.cfg
