@@ -25,4 +25,4 @@
 
 import ConfigParser
 config = ConfigParser.SafeConfigParser()
-config.read('httpca_signer.conf')
+config.read('httpca_signer.cfg')

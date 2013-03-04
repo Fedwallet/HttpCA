@@ -23,11 +23,16 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from configuration import config
-import model
-import pika
+from pika import BlockingConnection, ConnectionParameters, PlainCredentials
 
-connection = pika.BlockingConnection(pika.ConnectionParameters(host=host, port=port, virtual_host=virtual_host, credentials=credentials, ssl=ssl))
+from configuration import config
+
+credentials = PlainCredentials(config.get('broker', 'username'), config.get('broker', 'password'))
+connection = BlockingConnection(ConnectionParameters(host=config.get('broker', 'host'), 
+                                                     port=int(config.get('broker', 'port')), 
+                                                     virtual_host=config.get('broker', 'virtual_host'), 
+                                                     credentials=credentials, 
+                                                     ssl=bool(config.get('broker', 'ssl'))))
 
 channel = connection.channel()
 channel.basic_qos(prefetch_count=1)
@@ -35,8 +40,3 @@ channel.basic_qos(prefetch_count=1)
 # Register queues and callbacks
 channel.queue_declare(queue='signer_request_sign', durable=True)
 channel.basic_consume(callback_sign, queue='signer_request_sign')
-
-# Now start consuming
-print '[*] Waiting for message. To exit press CTRL+C'
-channel.start_consuming()
-

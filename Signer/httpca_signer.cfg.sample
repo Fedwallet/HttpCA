@@ -1,0 +1,7 @@
+[broker]
+host=localhost
+port=5672
+virtual_host='/'
+ssl=False
+username=guest
+password=guest
