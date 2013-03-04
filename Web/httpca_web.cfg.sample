@@ -1,0 +1,15 @@
+# Beware that the quotes around the values are mandatory
+
+# Whether or not to use server-side, database-stored sessions
+# NOTE: if you use this, you cannot use sqlite database
+USE_BEAKER = True
+
+### Secret key for the Flask application
+SECRET_KEY='<The web application secret key>'
+
+### url to the database server:
+# Note: sqlite is not supported if USE_BEAKER=True
+#SQLALCHEMY_DATABASE_URI=mysql://user:pass@host/db_name
+#SQLALCHEMY_DATABASE_URI=postgresql://user:pass@host/db_name
+
+

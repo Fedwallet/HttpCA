@@ -1,0 +1,3 @@
+#!/bin/bash
+export HTTPCA_WEB_CONFIG=../httpca_web.cfg
+python runserver.py
