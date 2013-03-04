@@ -28,7 +28,7 @@ from pika import BlockingConnection, URLParameters, PlainCredentials
 from configuration import config
 from queue_handler import install_queues
 
-connection = BlockingConnection(URLParameters(host=config.get('broker', 'URI'))) 
+connection = BlockingConnection(URLParameters(config.get('broker', 'URI'))) 
 
 channel = connection.channel()
 channel.basic_qos(prefetch_count=1)
