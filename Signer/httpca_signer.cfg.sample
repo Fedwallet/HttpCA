@@ -1,6 +1,6 @@
 [broker]
-URI='amqp://guest:guest@localhost:5672/%2F'
+URI=amqp://guest:guest@localhost:5672/%2F
 
 [database]
-URI=''
+URI=
 echo=False
