@@ -23,10 +23,10 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import model
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
+from configuration import config
 
-
-def install_queues(channel):
-    channel.queue_declare(queue='signer_request_sign', durable=True)
-    channel.basic_consume(callback_sign, queue='signer_request_sign')
+engine = create_engine(config.get('database', 'URI'), echo=bool(config.get('database', 'echo')))
+session = sessionmaker(bind=engine)

@@ -5,3 +5,7 @@ virtual_host='/'
 ssl=False
 username=guest
 password=guest
+
+[database]
+URI=''
+echo=False

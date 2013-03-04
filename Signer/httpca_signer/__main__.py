@@ -23,7 +23,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from queue_handler import channel
+from queue_controller import channel
 
 print '[I] Waiting for message. To exit press CTRL+C'
 channel.start_consuming()

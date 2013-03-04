@@ -23,10 +23,14 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import model
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String
+
+Base = declarative_base()
 
 
+class Certificate(Base):
+    __tablename__ = 'certificate'
 
-def install_queues(channel):
-    channel.queue_declare(queue='signer_request_sign', durable=True)
-    channel.basic_consume(callback_sign, queue='signer_request_sign')
+    id = Column(Integer, primary_key=True)
+    subject = Column(String)
