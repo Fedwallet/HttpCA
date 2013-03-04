@@ -23,6 +23,12 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+## These two lines are needed to run on EL6
+__requires__ = ['SQLAlchemy >= 0.7']
+import pkg_resources
+
+
+
 from queue_controller import channel
 
 print '[I] Waiting for message. To exit press CTRL+C'
