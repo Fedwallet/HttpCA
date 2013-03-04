@@ -39,4 +39,4 @@ setup( name                 = 'httpca_web'
      , packages             = find_packages()
      , zip_safe             = False
      , include_package_data = True
-     , install_requires     = ['Flask', 'SQLAlchemy>=0.7', 'flask-sqlalchemy', 'beaker', 'flask-babel', 'pika']
+     , install_requires     = ['Flask', 'SQLAlchemy>=0.7', 'flask-sqlalchemy', 'beaker', 'flask-babel', 'pika'])
