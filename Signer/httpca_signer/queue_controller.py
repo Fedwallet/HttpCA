@@ -23,17 +23,12 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from pika import BlockingConnection, ConnectionParameters, PlainCredentials
+from pika import BlockingConnection, URLParameters, PlainCredentials
 
 from configuration import config
 from queue_handler import install_queues
 
-credentials = PlainCredentials(config.get('broker', 'username'), config.get('broker', 'password'))
-connection = BlockingConnection(ConnectionParameters(host=config.get('broker', 'host'), 
-                                                     port=int(config.get('broker', 'port')), 
-                                                     virtual_host=config.get('broker', 'virtual_host'), 
-                                                     credentials=credentials, 
-                                                     ssl=bool(config.get('broker', 'ssl'))))
+connection = BlockingConnection(URLParameters(host=config.get('broker', 'URI'))) 
 
 channel = connection.channel()
 channel.basic_qos(prefetch_count=1)
