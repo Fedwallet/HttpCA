@@ -24,5 +24,5 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import ConfigParser
-config = ConfigParser.SafeConfigParser()
+config = ConfigParser.RawConfigParser()
 config.read('httpca_signer.cfg')
