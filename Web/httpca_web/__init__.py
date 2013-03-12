@@ -32,7 +32,6 @@ import pkg_resources
 
 # Imports
 import flask
-from beaker.middleware import SessionMiddleware
 from flask.ext.sqlalchemy import SQLAlchemy
 from flaskext.babel import Babel
 
@@ -83,7 +82,7 @@ app.config.from_envvar('HTTPCA_WEB_CONFIG', silent=True)
 if not app.config['SQLALCHEMY_DATABASE_URI']:
     print 'Error: Please make sure to configure SQLALCHEMY_DATABASE_URI'
     sys.exit(1)
-if app.config['SQLALCHEMY_DATABASE_URI'].startswith('sqlite') and app.config['USE_BEAKER']:
+if app.config['SQLALCHEMY_DATABASE_URI'].startswith('sqlite') and bool(app.config['USE_BEAKER']):
     print 'Error: HttpCA-Web does not support sqlite if beaker is enabled'
     sys.exit(1)
 if app.config['SQLALCHEMY_DATABASE_URI'].startswith('postgres:'):
@@ -98,18 +97,20 @@ db = SQLAlchemy(app)
 # Set up Babel
 babel = Babel(app)
 # Set up sessions
-session_opts = {
-    'session.lock_dir': '/tmp/beaker',
-    'session.type': 'ext:database',
-    'session.url': app.config['SQLALCHEMY_DATABASE_URI'],
-    'session.auto': False,
-    'session.cookie_expires': True,
-    'session.key': 'HTTPCA_WEB',
-    'session.secret': app.config['SECRET_KEY'],
-    'session.secure': False,
-    'session.table_name': 'session'
-}
-app.wsgi_app = SessionMiddleware(app.wsgi_app, session_opts)
+if bool(app.config['USE_BEAKER']):
+    from beaker.middleware import SessionMiddleware
+    session_opts = {
+        'session.lock_dir': '/tmp/beaker',
+        'session.type': 'ext:database',
+        'session.url': app.config['SQLALCHEMY_DATABASE_URI'],
+        'session.auto': False,
+        'session.cookie_expires': True,
+        'session.key': 'HTTPCA_WEB',
+        'session.secret': app.config['SECRET_KEY'],
+        'session.secure': False,
+        'session.table_name': 'session'
+    }
+    app.wsgi_app = SessionMiddleware(app.wsgi_app, session_opts)
 
 # Import the other stuff
 import model
