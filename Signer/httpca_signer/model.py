@@ -62,3 +62,26 @@ class Certificate(Base):
                         , 'Revoked-CertificateHold'
                         )
                    )
+
+
+
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+def create_tables(db_url, debug=False):
+    """ Create the tables in the database using the information from the
+    url obtained.
+
+    :arg db_url, URL used to connect to the database. The URL contains
+    information with regards to the database engine, the host to connect
+    to, the user and password and the database name.
+      ie: <engine>://<user>:<password>@<host>/<dbname>
+    :kwarg debug, a boolean specifying wether we should have the verbose
+    output of sqlalchemy or not.
+    :return a session that can be used to query the database.
+    """
+    engine = create_engine(db_url, echo=debug)
+    db.Model.metadata.create_all(engine)
+
+    sessionmak = sessionmaker(bind=engine)
+    return sessionmak()
