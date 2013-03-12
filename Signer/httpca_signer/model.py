@@ -32,5 +32,32 @@ Base = declarative_base()
 class Certificate(Base):
     __tablename__ = 'certificate'
 
-    id = Column(Integer, primary_key=True)
-    subject = Column(String)
+    id                  = Column(Integer                # The key identifier
+                                , primary_key=True)
+    Type                = Column(Enum( 'CA'             # sub-CA certificate
+                                     , 'Server'         # Server certificate
+                                     , 'User'           # User certificate
+                                     )
+                                )
+    CommonName          = Column(String)                # Subject CN
+    OrganizationalUnit  = Column(String)                # Subject OU
+    Organization        = Column(String)                # Subject O
+    Location            = Column(String)                # Subject L
+    State               = Column(String)                # Subject S
+    Country             = Column(String)                # Subject CO
+    CSR                 = Column(String)                # The certificate signing request PEM string
+    Certificate         = Column(String)                # The signed certificate PEM string
+    Status = Column(Enum( 'Waiting-For-Approval'        # Certificate needs administrator approval
+                        , 'Waiting-For-Signature'       # Certificate is ready to be signed
+                        , 'Waiting-For-Transmission'    # Certificate is signed and is ready for transmission to the web interface
+                        , 'Valid'                       # Certificate is valid
+                        , 'Expired'                     # Certificate has expired
+                        , 'Revoked-Unspecified'         # From here on, only revocation reasons follow
+                        , 'Revoked-KeyCompromise'
+                        , 'Revoked-CACompromise'
+                        , 'Revoked-AffiliationChanged'
+                        , 'Revoked-Superseded'
+                        , 'Revoked-CessationOfOperation'
+                        , 'Revoked-CertificateHold'
+                        )
+                   )
