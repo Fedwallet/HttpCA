@@ -1,3 +1,16 @@
+[policy_CA]
+enabled=False
+needs_approval=True
+
+[policy_server]
+enabled=True
+needs_approval=True
+
+[policy_user]
+enabled=True
+needs_approval=True
+
+
 [broker]
 URI=amqp://guest:guest@localhost:5672/%2F
 
